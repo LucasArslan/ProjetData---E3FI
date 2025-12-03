@@ -24,7 +24,8 @@ build/
 # Données brutes (optionnel)
 data/raw/*.csv
 data/raw/*.xlsx
-data/raw/*
+data/raw/*.zip
+data/raw/*.txt
 
 # Logs
 *.log
