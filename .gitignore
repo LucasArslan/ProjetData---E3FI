@@ -1,0 +1,38 @@
+# Environnement virtuel
+venv/
+.venv/
+env/
+.env
+
+# Fichiers Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Données brutes (optionnel)
+data/raw/*.csv
+data/raw/*.xlsx
+data/raw/*
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache
+.cache/
+.pytest_cache/
