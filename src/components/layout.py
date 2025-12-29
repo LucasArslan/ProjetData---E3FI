@@ -3,24 +3,25 @@ import dash_bootstrap_components as dbc
 
 DEPARTEMENTS = {
     '01': 'Ain', '02': 'Aisne', '75': 'Paris', '13': 'Bouches-du-Rhône',
-    '69': 'Rhône', '33': 'Gironde', '44': 'Loire-Atlantique'
 }
 
 def create_layout(dept_codes, types_biens, min_price, max_price):
     sidebar = html.Div([
-        html.H2("ImmoViz", className="display-6"),
-        html.Hr(),
+        html.Div([
+            html.H2("ImmoViz", className="display-6"),
+            html.Hr(),
+        ], className="sidebar-header"),
         
-        html.Label("Département"),
+        html.Label("Département", className="filter-label"),
         dcc.Dropdown(
             id='filter-dept',
             options=[{'label': "France Entière", 'value': 'all'}] + 
-                    [{'label': f"{d} - {DEPARTEMENTS.get(d, '')}", 'value': d} for d in dept_codes],
+                    [{'label': f"{d}", 'value': d} for d in dept_codes],
             value='all',
             clearable=False
         ),
         
-        html.Label("Type de bien"),
+        html.Label("Type de bien", className="filter-label"),
         dcc.Checklist(
             id='filter-type',
             options=[{'label': f" {t}", 'value': t} for t in types_biens],
@@ -28,7 +29,7 @@ def create_layout(dept_codes, types_biens, min_price, max_price):
             inputStyle={"margin-right": "5px"}
         ),
         
-        html.Label("Prix / m² (€)"),
+        html.Label("Prix / m² (€)", className="filter-label"),
         dcc.RangeSlider(
             id='filter-price',
             min=min_price,
@@ -41,8 +42,28 @@ def create_layout(dept_codes, types_biens, min_price, max_price):
     ], className="sidebar")
     
     content = html.Div([
-        html.H3("Carte"),
-        dcc.Graph(id='map-graph')
+        dbc.Row([
+            dbc.Col(dbc.Card([
+                dbc.CardHeader("Prix Moyen"),
+                dbc.CardBody([
+                    html.H2(id='kpi-price', className="kpi-value"),
+                    html.Small("€ / m²", className="text-muted")
+                ])
+            ]), width=3),
+            dbc.Col(dbc.Card([
+                dbc.CardHeader("Volume Ventes"),
+                dbc.CardBody([
+                    html.H2(id='kpi-volume', className="kpi-value"),
+                ])
+            ]), width=3),
+        ]),
+        
+        dbc.Row([
+            dbc.Col(dbc.Card([
+                dbc.CardHeader("Cartographie"),
+                dbc.CardBody([dcc.Graph(id='map-graph')])
+            ]))
+        ])
     ], className="content")
     
     return html.Div([sidebar, content])
