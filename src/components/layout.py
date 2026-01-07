@@ -38,6 +38,18 @@ def create_layout(dept_codes, types_biens, min_price, max_price):
             tooltip={"placement": "bottom", "always_visible": True}
         ),
         
+        html.Label("Date Début (2023)", className="filter-label"),
+        dbc.Row([
+            dbc.Col(dcc.Dropdown(id='start-day', options=[{'label': i, 'value': i} for i in range(1, 32)], value=1), width=6),
+            dbc.Col(dcc.Dropdown(id='start-month', options=[{'label': i, 'value': i} for i in range(1, 13)], value=1), width=6),
+        ]),
+        
+        html.Label("Date Fin (2023)", className="filter-label"),
+        dbc.Row([
+            dbc.Col(dcc.Dropdown(id='end-day', options=[{'label': i, 'value': i} for i in range(1, 32)], value=31), width=6),
+            dbc.Col(dcc.Dropdown(id='end-month', options=[{'label': i, 'value': i} for i in range(1, 13)], value=12), width=6),
+        ]),
+        
         html.Button("Actualiser", id='btn-update', className="btn-update"),
     ], className="sidebar")
     
