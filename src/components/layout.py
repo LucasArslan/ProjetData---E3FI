@@ -73,8 +73,19 @@ def create_layout(dept_codes, types_biens, min_price, max_price):
         dbc.Row([
             dbc.Col(dbc.Card([
                 dbc.CardHeader("Cartographie"),
-                dbc.CardBody([dcc.Graph(id='map-graph')])
+                dbc.CardBody([dcc.Graph(id='map-graph', style={'height': '60vh'})])
             ]))
+        ], className="mb-4"),
+        
+        dbc.Row([
+            dbc.Col(dbc.Card([
+                dbc.CardHeader("Évolution Prix"),
+                dbc.CardBody(dcc.Graph(id='line-evol', style={'height': '300px'}))
+            ]), width=8),
+            dbc.Col(dbc.Card([
+                dbc.CardHeader("Répartition"),
+                dbc.CardBody(dcc.Graph(id='pie-type', style={'height': '300px'}))
+            ]), width=4),
         ])
     ], className="content")
     
