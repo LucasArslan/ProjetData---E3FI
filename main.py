@@ -30,6 +30,8 @@ app.layout = create_layout(departements, types_biens, min_price, max_price)
 
 @app.callback(
     [Output('map-graph', 'figure'),
+     Output('line-evol', 'figure'),
+     Output('pie-type', 'figure'),
      Output('kpi-price', 'children'),
      Output('kpi-volume', 'children')],
     [Input('btn-update', 'n_clicks')],
