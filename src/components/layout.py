@@ -90,3 +90,14 @@ def create_layout(dept_codes, types_biens, min_price, max_price):
     ], className="content")
     
     return html.Div([sidebar, content])
+
+        dbc.Row([
+            dbc.Col(dbc.Card([
+                dbc.CardHeader("Top 10 Villes (+chères)"),
+                dbc.CardBody(dcc.Graph(id='bar-top10', style={'height': '300px'}))
+            ]), width=6),
+            dbc.Col(dbc.Card([
+                dbc.CardHeader("Distribution Prix"),
+                dbc.CardBody(dcc.Graph(id='hist-dist', style={'height': '300px'}))
+            ]), width=6),
+        ])
