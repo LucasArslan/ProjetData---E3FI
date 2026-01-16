@@ -5,6 +5,11 @@ RAW_PATH = os.path.join("data", "raw", "dvf_2023.csv.gz")
 CSV_DETAIL_PATH = os.path.join("data", "cleaned", "data_detail.csv")
 CHUNK_SIZE = 100000
 
+def fix_plm_codes(code):
+    """Garde les codes arrondissements pour PLM"""
+    code = str(code)
+    return code
+
 def process():
     print("Démarrage du traitement France Entière")
     
@@ -25,20 +30,26 @@ def process():
         chunk = chunk[chunk['surface_reelle_bati'] > 9]
         chunk = chunk[chunk['valeur_fonciere'] > 1000]
         
+        chunk['code_commune'] = chunk['code_commune'].apply(fix_plm_codes)
+        
         chunk['prix_m2'] = chunk['valeur_fonciere'] / chunk['surface_reelle_bati']
         chunk = chunk[(chunk['prix_m2'] > 500) & (chunk['prix_m2'] < 25000)]
         
         chunks_kept.append(chunk)
         total_rows += len(chunk)
-        print(f"   Lot {i} ({total_rows} ventes)")
+        print(f"   Traitement lot {i} ({total_rows} ventes conservées)")
     
+    print("Fusion des données")
     df = pd.concat(chunks_kept)
+    
+    print("Création du fichier DÉTAIL")
     df['date_mutation'] = pd.to_datetime(df['date_mutation'])
     df['mois'] = df['date_mutation'].dt.to_period('M').astype(str)
     
     os.makedirs(os.path.dirname(CSV_DETAIL_PATH), exist_ok=True)
     df.to_csv(CSV_DETAIL_PATH, index=False)
-    print(f"{CSV_DETAIL_PATH} généré.")
+    print(f"{CSV_DETAIL_PATH} généré")
+    print("Terminé")
 
 if __name__ == "__main__":
     process()
