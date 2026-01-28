@@ -7,7 +7,7 @@ __pycache__/
 *.egg-info/
 .eggs/
 
-# Data files
+# Data files (téléchargeables via scripts)
 data/raw/*.csv.gz
 data/raw/*.geojson
 data/cleaned/*.csv
@@ -16,12 +16,17 @@ data/cleaned/*.csv
 .vscode/
 .idea/
 *.swp
+*.swo
 
 # Environment
 .env
 .venv/
 venv/
+ENV/
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
